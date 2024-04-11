@@ -142,7 +142,7 @@ get_macaddr(value devname)
   close(fd);
 
   hwaddr = caml_alloc_string(6);
-  memcpy(String_val(hwaddr), ifq.ifr_addr.sa_data, 6);
+  memcpy(Bytes_val(hwaddr), ifq.ifr_addr.sa_data, 6);
 
   CAMLreturn (hwaddr);
 }
@@ -180,7 +180,7 @@ get_macaddr(value devname)
     err(1, "get_mac_addr");
 
   v_mac = caml_alloc_string(6);
-  memcpy(String_val(v_mac), mac_addr, 6);
+  memcpy(Bytes_val(v_mac), mac_addr, 6);
   CAMLreturn (v_mac);
 }
 #endif
@@ -365,13 +365,13 @@ CAMLprim value caml_string_of_sa(struct sockaddr *sa)
     case AF_INET:
       sa_in = (struct sockaddr_in *)sa;
       ret = caml_alloc_string(4);
-      memcpy(String_val(ret), &sa_in->sin_addr.s_addr, 4);
+      memcpy(Bytes_val(ret), &sa_in->sin_addr.s_addr, 4);
       break;
 
     case AF_INET6:
       sa_in6 = (struct sockaddr_in6 *)sa;
       ret = caml_alloc_string(16);
-      memcpy(String_val(ret), sa_in6->sin6_addr.s6_addr, 16);
+      memcpy(Bytes_val(ret), sa_in6->sin6_addr.s6_addr, 16);
       break;
 
     default:
